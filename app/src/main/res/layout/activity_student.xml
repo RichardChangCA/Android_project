@@ -4,17 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StudentActivity">
+    tools:context=".StudentActivity"
+    android:background="@drawable/magic">
 
-    <RelativeLayout
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_width="match_parent">
+        android:orientation="vertical"
+        android:scrollbars="none">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="96dp"
+        tools:layout_editor_absoluteY="0dp">
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="请选择相应的考勤课程"></TextView>
+            android:text="请选择相应的考勤课程"
+            ></TextView>
 
         <Spinner
             android:id="@+id/spinner"
@@ -22,40 +32,71 @@
             android:layout_height="wrap_content"
             android:ellipsize="marquee" />
 
-        <Button
-            android:id="@+id/btn_upload_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="10dp"
-            android:text="提交" />
 
-        <Button
-            android:id="@+id/btn_get_pic_from_camera"
-            android:layout_width="wrap_content"
+        <GridLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_margin="10dp"
-            android:text="调用相机" />
+            android:rowCount="2"
+            android:columnCount="3">
+            <!--两行三列-->
+            <ImageView
+                android:id="@+id/iv_test_1"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                android:padding="3dp"/>
+            <ImageView
+                android:id="@+id/iv_test_2"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                android:padding="3dp"/>
+            <ImageView
+                android:id="@+id/iv_test_3"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                android:padding="3dp"/>
+            <Button
+                android:id="@+id/btn_get_pic_from_camera_1"
+                android:layout_margin="10dp"
+                android:text="拍照①"
+                android:textColor="#000"
+                android:background="@drawable/btn_selector"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"/>
+            <Button
+                android:id="@+id/btn_get_pic_from_camera_2"
+                android:layout_margin="10dp"
+                android:text="拍照②"
+                android:textColor="#000"
+                android:background="@drawable/btn_selector"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"/>
+            <Button
+                android:id="@+id/btn_get_pic_from_camera_3"
+                android:layout_margin="10dp"
+                android:text="拍照③"
+                android:textColor="#000"
+                android:background="@drawable/btn_selector"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"/>
+        </GridLayout>
 
-        <ImageView
-            android:id="@+id/iv_test"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_centerInParent="true"/>
-            <!--android:contentDescription="@string/app_name"-->
-            <!--android:scaleType="fitXY"-->
-            <!--tools:src="@mipmap/ic_launcher" -->
 
         <TextView
             android:id="@+id/dbm_view"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></TextView>
+
+        <Button
+            android:id="@+id/btn_upload_img"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            ></TextView>
+            android:layout_margin="10dp"
+            android:text="提交"
+            android:textColor="#000"
+            android:background="@drawable/btn_selector"/>
 
 
-    </RelativeLayout>
+    </LinearLayout>
+    </ScrollView>
 </android.support.constraint.ConstraintLayout>
 

@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.wifi.ScanResult;
@@ -22,8 +24,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.TimeZone;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.concurrent.CountDownLatch;
 
 
@@ -50,7 +52,7 @@ public class TeacherActivity extends AppCompatActivity {
 
     private int course_sum;
 
-    private CountDownLatch count;
+    private CountDownLatch count,count2;
 
     private String chosen_mac;
     private String chosen_course;
@@ -64,11 +66,14 @@ public class TeacherActivity extends AppCompatActivity {
     private String second;
     private String start_time;
 
+    private String result_attendanceId;
+
 //    @SuppressLint("HandlerLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher);
+
         // 首先获取到意图对象
         Intent intent = getIntent();
 
@@ -77,6 +82,70 @@ public class TeacherActivity extends AppCompatActivity {
 //        String account = intent.getStringExtra("account");
         Log.d("教师", "email" + email);
 //        Log.d("教师","account"+account);
+
+        count2 = new CountDownLatch(1);//等待一个线程结束后才执行其他步骤
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                UserDao ud = new UserDao();
+                result_attendanceId = ud.findAttendanceByEmail(email);
+                Log.d("考勤","result_attendanceId"+result_attendanceId);
+
+
+                count2.countDown();
+            }
+        }).start();
+        try {
+            count2.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if(result_attendanceId.contentEquals("0")){
+            //do nothing
+        }else{
+            new AlertDialog.Builder(TeacherActivity.this)
+                    .setTitle("提示")
+                    .setCancelable(false)
+                    .setMessage("您还有未结束的考勤")
+                    .setPositiveButton("前往结束",
+                            new DialogInterface.OnClickListener() {
+
+                                public void onClick(DialogInterface dialog,
+                                                    int which) {
+                                    // TODO Auto-generated method
+                                    Log.d("考勤","确定");
+                                    Intent intent = new Intent();
+                                    //setClass函数的第一个参数是一个Context对象
+                                    //Context是一个类，Activity是Context类的子类，也就是说，所有的Activity对象，都可以向上转型为Context对象
+                                    //setClass函数的第二个参数是一个Class对象，在当前场景下，应该传入需要被启动的Activity类的class对象
+                                    intent.setClass(TeacherActivity.this, StopAttendanceActivity.class);
+                                    intent.putExtra("attendance_id", result_attendanceId);
+                                    startActivity(intent);
+
+                                }
+                                //当点击返回时，就停留在本界面
+                            })
+                    .setNegativeButton("返回",
+                            new DialogInterface.OnClickListener() {
+
+                                public void onClick(DialogInterface dialog,
+                                                    int which) {
+                                    Log.d("考勤","返回");
+                                    Intent intent = new Intent();
+                                    intent.setClass(TeacherActivity.this, MainActivity.class);
+                                    startActivity(intent);
+
+                                }
+
+
+                            })
+                    .show();
+        }
+
+
+
+
         // 获得WifiManager
         wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
         // 判断wifi是否开启
@@ -323,4 +392,16 @@ public class TeacherActivity extends AppCompatActivity {
         }
     }
 
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if(keyCode == KeyEvent.KEYCODE_BACK){
+//            Log.d("返回","返回键按下");
+////            Intent intent = new Intent(Intent.ACTION_MAIN);
+////            intent.addCategory(Intent.CATEGORY_HOME);
+//            Intent intent = new Intent();
+//            intent.setClass(TeacherActivity.this, MainActivity.class);
+//            startActivity(intent);
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 }

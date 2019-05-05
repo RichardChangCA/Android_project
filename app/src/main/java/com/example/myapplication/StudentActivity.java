@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -64,17 +65,18 @@ public class StudentActivity extends AppCompatActivity implements View.OnClickLi
 //        Log.d("学生", "email" + email);
 ////        Log.d("学生","account"+account);
 //    }
-    private ImageView ivTest;
+    private ImageView ivTest_1, ivTest_2,ivTest_3;
     private TextView dbm_view;
 
-    private File cameraSavePath;//拍照照片路径
+    private int camera_tag;
+    private File cameraSavePath, cameraSavePath_1, cameraSavePath_2, cameraSavePath_3;//拍照照片路径
     private Uri uri;
     private String[] permissions = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
 
     private String return_value;
 
     private String email;
-    private CountDownLatch count, count2;
+    private CountDownLatch count, count2, count3;
     private Spinner spinner;
     private List<String> data_list;
     private ArrayAdapter<String> arr_adapter;
@@ -97,6 +99,7 @@ public class StudentActivity extends AppCompatActivity implements View.OnClickLi
     private WifiInfo wifiInfo = null;       //获得的Wifi信息
     private WifiManager wifiManager = null; //Wifi管理器
     private Handler handler;
+    private static Handler process_handler =new Handler();
     private int level;                      //信号强度值
     private String macAddress;              //wifi信号BSSID值
     List<ScanResult> listb;
@@ -104,6 +107,9 @@ public class StudentActivity extends AppCompatActivity implements View.OnClickLi
     private String[] listSSID0;
     private String[] listBSSID0;
     private int[] listLevel0;
+
+    private AlertDialog.Builder process_builder;
+    private AlertDialog process_dialog;
 
 
     @Override
@@ -119,15 +125,21 @@ public class StudentActivity extends AppCompatActivity implements View.OnClickLi
         Log.d("学生", "email" + email);
 //        Log.d("学生","account"+account);
 
-        Button btnGetPicFromCamera = findViewById(R.id.btn_get_pic_from_camera);
+        Button btnGetPicFromCamera_1 = findViewById(R.id.btn_get_pic_from_camera_1);
+        Button btnGetPicFromCamera_2 = findViewById(R.id.btn_get_pic_from_camera_2);
+        Button btnGetPicFromCamera_3 = findViewById(R.id.btn_get_pic_from_camera_3);
 //        Button btnGetPicFromPhotoAlbum = findViewById(R.id.btn_get_pic_form_photo_album);
 //        Button btnGetPermission = findViewById(R.id.btn_get_Permission);
         Button btn_upload_img = findViewById(R.id.btn_upload_img);
-        ivTest = findViewById(R.id.iv_test);
+        ivTest_1 = findViewById(R.id.iv_test_1);
+        ivTest_2 = findViewById(R.id.iv_test_2);
+        ivTest_3 = findViewById(R.id.iv_test_3);
 
         dbm_view = findViewById(R.id.dbm_view);
 
-        btnGetPicFromCamera.setOnClickListener(this);
+        btnGetPicFromCamera_1.setOnClickListener(this);
+        btnGetPicFromCamera_2.setOnClickListener(this);
+        btnGetPicFromCamera_3.setOnClickListener(this);
 //        btnGetPicFromPhotoAlbum.setOnClickListener(this);
 //        btnGetPermission.setOnClickListener(this);
         btn_upload_img.setOnClickListener(this);
@@ -209,24 +221,53 @@ public class StudentActivity extends AppCompatActivity implements View.OnClickLi
         spinner.setAdapter(arr_adapter);
 
         spinner.setOnItemSelectedListener(this);
+
+        process_builder = new AlertDialog.Builder(StudentActivity.this)
+                .setMessage("处理中...").setCancelable(true);
+        process_dialog = process_builder.create();
     }
 
     @Override
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
-            case R.id.btn_get_pic_from_camera:
+            case R.id.btn_get_pic_from_camera_1:
+                cameraSavePath_1 = new File(Environment.getExternalStorageDirectory().getPath() + "/" + System.currentTimeMillis() + ".jpg");
+                cameraSavePath = cameraSavePath_1;
+                camera_tag = 1;
+                goCamera();
+                break;
+            case R.id.btn_get_pic_from_camera_2:
+                cameraSavePath_2 = new File(Environment.getExternalStorageDirectory().getPath() + "/" + System.currentTimeMillis() + ".jpg");
+                cameraSavePath = cameraSavePath_2;
+                camera_tag = 2;
+                goCamera();
+                break;
+            case R.id.btn_get_pic_from_camera_3:
+                cameraSavePath_3 = new File(Environment.getExternalStorageDirectory().getPath() + "/" + System.currentTimeMillis() + ".jpg");
+                cameraSavePath = cameraSavePath_3;
+                camera_tag = 3;
                 goCamera();
                 break;
             case R.id.btn_upload_img:
                 // Android 4.0 之后不能在主线程中请求HTTP请求
+
+
+
+//                count3 = new CountDownLatch(1);//等待一个线程结束后才执行其他步骤
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
+
+                        process_handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+
+                            }
+                        });
+
                         UserDao usd = new UserDao();
                         String id = usd.findId(email);
-
-
                         cal = Calendar.getInstance();
                         cal.setTimeZone(TimeZone.getTimeZone("GMT+8:00")); //中国时区
 
@@ -271,17 +312,41 @@ public class StudentActivity extends AppCompatActivity implements View.OnClickLi
                         teacherId = spinner.getSelectedItem().toString().split("-")[1].split(":")[0];
                         String stu_result = ud.StudentAttendance(email, courseId, teacherId, attendance_time, String.valueOf(dbm));
                         Log.d("学生签到","stu_result"+stu_result);
+
                         HttpAssist post_access = new HttpAssist();
-                        Log.d("笑嘻嘻", cameraSavePath + ":cameraSavePath");
-                        return_value = post_access.uploadFile(cameraSavePath, id, stu_result);
+                        Log.d("笑嘻嘻", cameraSavePath_1 + ":cameraSavePath_1");
+                        Log.d("笑嘻嘻", cameraSavePath_2 + ":cameraSavePath_2");
+                        Log.d("笑嘻嘻", cameraSavePath_3 + ":cameraSavePath_3");
+                        return_value = post_access.uploadFile(cameraSavePath_1,cameraSavePath_2,cameraSavePath_3, id, stu_result);
                         Log.d("笑嘻嘻", return_value + "哈哈");
                         if(!TextUtils.isEmpty(stu_result)){
                             Log.d("学生签到","提交成功，等待考核");
+                            Intent intent = new Intent();
+                            //setClass函数的第一个参数是一个Context对象
+                            //Context是一个类，Activity是Context类的子类，也就是说，所有的Activity对象，都可以向上转型为Context对象
+                            //setClass函数的第二个参数是一个Class对象，在当前场景下，应该传入需要被启动的Activity类的class对象
+                            intent.setClass(StudentActivity.this, WaitForAttenActivity.class);
+                            startActivity(intent);
                         }else{
                             Log.d("学生签到","提交失败");
+                            Intent intent = new Intent();
+                            //setClass函数的第一个参数是一个Context对象
+                            //Context是一个类，Activity是Context类的子类，也就是说，所有的Activity对象，都可以向上转型为Context对象
+                            //setClass函数的第二个参数是一个Class对象，在当前场景下，应该传入需要被启动的Activity类的class对象
+                            intent.setClass(StudentActivity.this, TwiceForbiddenActivity.class);
+                            startActivity(intent);
                         }
+                        process_dialog.dismiss(); //关闭弹窗
+//                        count3.countDown();
                     }
                 }).start();
+                process_dialog.show();
+//                try {
+//                    count3.await();
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//
                 break;
 
 //            case R.id.btn_get_pic_form_photo_album:
@@ -307,7 +372,7 @@ public class StudentActivity extends AppCompatActivity implements View.OnClickLi
 
     //激活相机操作
     private void goCamera() {
-        cameraSavePath = new File(Environment.getExternalStorageDirectory().getPath() + "/" + System.currentTimeMillis() + ".jpg");
+//        cameraSavePath = new File(Environment.getExternalStorageDirectory().getPath() + "/" + System.currentTimeMillis() + ".jpg");
 //        cameraSavePath = new File(Environment.getDownloadCacheDirectory().getPath() + "/" + System.currentTimeMillis() + ".jpg");
 
         Log.d("笑嘻嘻", "嘿" + Environment.getDataDirectory().getAbsolutePath());
@@ -380,18 +445,49 @@ public class StudentActivity extends AppCompatActivity implements View.OnClickLi
             e.printStackTrace();
         }
 
-
         String photoPath;
-        if (requestCode == 1 && resultCode == RESULT_OK) {
+        switch (camera_tag){
+            case 1:
+                cameraSavePath_1 = cameraSavePath;
+                if (requestCode == 1 && resultCode == RESULT_OK) {
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                photoPath = String.valueOf(cameraSavePath);
-            } else {
-                photoPath = uri.getEncodedPath();
-            }
-            Log.d("拍照返回图片路径", photoPath);
-            Glide.with(StudentActivity.this).load(photoPath).into(ivTest);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        photoPath = String.valueOf(cameraSavePath_1);
+                    } else {
+                        photoPath = uri.getEncodedPath();
+                    }
+                    Log.d("拍照返回图片路径", photoPath);
+                    Glide.with(StudentActivity.this).load(photoPath).into(ivTest_1);
+                }
+                break;
+            case 2:
+                cameraSavePath_2 = cameraSavePath;
+                if (requestCode == 1 && resultCode == RESULT_OK) {
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        photoPath = String.valueOf(cameraSavePath_2);
+                    } else {
+                        photoPath = uri.getEncodedPath();
+                    }
+                    Log.d("拍照返回图片路径", photoPath);
+                    Glide.with(StudentActivity.this).load(photoPath).into(ivTest_2);
+                }
+                break;
+            case 3:
+                cameraSavePath_3 = cameraSavePath;
+                if (requestCode == 1 && resultCode == RESULT_OK) {
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        photoPath = String.valueOf(cameraSavePath_3);
+                    } else {
+                        photoPath = uri.getEncodedPath();
+                    }
+                    Log.d("拍照返回图片路径", photoPath);
+                    Glide.with(StudentActivity.this).load(photoPath).into(ivTest_3);
+                }
+                break;
         }
+
 //        else if (requestCode == 2 && resultCode == RESULT_OK) {
 //            photoPath = getPhotoFromPhotoAlbum.getRealPathFromUri(this, data.getData());
 //            Glide.with(StudentActivity.this).load(photoPath).into(ivTest);
