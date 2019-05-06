@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval"
+    android:useLevel="false">
+
+    <!-- 实心 -->
+    <stroke android:width="3dip" android:color="#000" />
+    <!-- 圆角 -->
+    <corners android:radius="360dp" />
+    <!-- 边距 -->
+    <padding
+        android:bottom="20dp"
+        android:left="20dp"
+        android:right="20dp"
+        android:top="20dp" />
+
+    <!-- 大小 -->
+    <size android:width="15dp"
+        android:height="15dp" />
+
+</shape>

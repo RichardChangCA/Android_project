@@ -24,13 +24,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="请选择相应的考勤课程"
+            android:layout_gravity="center"
+            android:textColor="#000"
+            android:textSize="20dp"
             ></TextView>
 
         <Spinner
             android:id="@+id/spinner"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="marquee" />
+            android:ellipsize="marquee"
+            android:layout_gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:popupBackground="#fff"
+            />
+        <!--android:background="@drawable/spinner"-->
+        <!--android:popupBackground="@drawable/spinner"-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/spinner_text"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:ellipsize="marquee"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:gravity="center"-->
+            <!--android:textSize="20dp"-->
+            <!--android:textColor="#000"-->
+            <!--android:paddingTop="2dp"-->
+            <!--android:paddingBottom="2dp"-->
+            <!--&gt;</TextView>-->
 
 
         <GridLayout
@@ -43,17 +66,19 @@
                 android:id="@+id/iv_test_1"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:padding="3dp"/>
+                android:padding="3dp"
+                />
             <ImageView
                 android:id="@+id/iv_test_2"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:padding="3dp"/>
+                android:padding="3dp"
+                />
             <ImageView
                 android:id="@+id/iv_test_3"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:padding="3dp"/>
+                android:padding="3dp" />
             <Button
                 android:id="@+id/btn_get_pic_from_camera_1"
                 android:layout_margin="10dp"
@@ -82,9 +107,21 @@
 
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="当前信号强度"
+            android:layout_gravity="center"
+            android:textColor="#000"
+            android:textSize="20dp"
+            ></TextView>
+        <TextView
             android:id="@+id/dbm_view"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></TextView>
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="70dp"
+            android:background="@drawable/circle"
+            ></TextView>
 
         <Button
             android:id="@+id/btn_upload_img"
@@ -93,7 +130,8 @@
             android:layout_margin="10dp"
             android:text="提交"
             android:textColor="#000"
-            android:background="@drawable/btn_selector"/>
+            android:background="@drawable/btn_selector"
+            android:layout_gravity="center"/>
 
 
     </LinearLayout>

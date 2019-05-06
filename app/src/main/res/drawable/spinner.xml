@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <!--<stroke-->
+        <!--android:width="2dp"-->
+        <!--android:color="#000" />-->
+
+    <!-- 实心 -->
+    <solid android:color="#fff" />
+    <!-- 边距 -->
+    <padding
+        android:bottom="2dp"
+        android:top="2dp" />
+
+</shape>
