@@ -70,18 +70,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.2" />
 
-    <Button
-        android:id="@+id/register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="fun"
-        android:text="注册"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.7" />
+    <!--<Button-->
+        <!--android:id="@+id/register"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:onClick="fun"-->
+        <!--android:text="注册"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintHorizontal_bias="0.8"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent"-->
+        <!--app:layout_constraintVertical_bias="0.7" />-->
 
     <Button
         android:id="@+id/login"
@@ -91,7 +91,7 @@
         android:text="登录"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.7"
@@ -131,11 +131,11 @@
                 android:tag="rd2"
                 android:text="教师" />
 
-            <RadioButton
-                android:id="@+id/radio3"
-                style="@style/select_style"
-                android:tag="rd3"
-                android:text="管理员" />
+            <!--<RadioButton-->
+                <!--android:id="@+id/radio3"-->
+                <!--style="@style/select_style"-->
+                <!--android:tag="rd3"-->
+                <!--android:text="管理员" />-->
         </RadioGroup>
 
     </LinearLayout>

@@ -89,26 +89,26 @@ public class MainActivity extends AppCompatActivity {
     //用户根据点击事件来找到相应的功能
     public void fun(View v) {
         switch (v.getId()) {
-            case R.id.register:
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        String n = name.getText().toString().trim();
-                        String psw = password.getText().toString().trim();
-                        UserDao ud = new UserDao();
-                        boolean result = ud.register(n, psw);
-                        if (!result) {
-                            Looper.prepare();
-                            Toast toast = Toast.makeText(MainActivity.this, "注册成功！", Toast.LENGTH_SHORT);
-                            toast.show();
-                            Looper.loop();
-                        }
-                        Log.i(TAG, "fun" + result);
-
-                        //以上为jdbc注册
-                    }
-                }).start();
-                break;
+//            case R.id.register:
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        String n = name.getText().toString().trim();
+//                        String psw = password.getText().toString().trim();
+//                        UserDao ud = new UserDao();
+//                        boolean result = ud.register(n, psw);
+//                        if (!result) {
+//                            Looper.prepare();
+//                            Toast toast = Toast.makeText(MainActivity.this, "注册成功！", Toast.LENGTH_SHORT);
+//                            toast.show();
+//                            Looper.loop();
+//                        }
+//                        Log.i(TAG, "fun" + result);
+//
+//                        //以上为jdbc注册
+//                    }
+//                }).start();
+//                break;
             case R.id.login:
                 new Thread(new Runnable() {
                     @Override
@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         //用浏览器打开网页，有默认浏览器用默认浏览器打开，没有默认浏览器用户选择浏览器打开
-                        Uri uri = Uri.parse("http://39.97.105.151:8000/");
+                        Uri uri = Uri.parse("http://39.100.45.7:8000/");
                         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                         startActivity(intent);
                     }

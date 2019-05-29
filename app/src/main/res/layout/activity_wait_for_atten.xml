@@ -11,12 +11,23 @@
         android:layout_height="match_parent"
         android:background="@drawable/star">
     <TextView
+        android:id="@+id/text"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:text="提交成功，等待系统考核"
         android:layout_centerInParent="true"
         android:textColor="@color/white"
         android:textSize="20dp"></TextView>
+
+        <Button
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="fun"
+            android:text="返回"
+            android:textColor="@color/colorPrimary"
+            android:layout_alignParentBottom="true"
+            />
 
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

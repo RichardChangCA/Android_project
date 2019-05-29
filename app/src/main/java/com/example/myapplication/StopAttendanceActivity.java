@@ -83,6 +83,9 @@ public class StopAttendanceActivity extends AppCompatActivity {
                         Log.d("结束考勤","返回结果:"+return_result);
                         if(return_result==1){
                             Log.d("结束考勤","结束成功");
+                            Intent intent = new Intent();
+                            intent.setClass(StopAttendanceActivity.this, MainActivity.class);
+                            startActivity(intent);
                         }else{
                             Log.d("结束考勤","结束失败");
                         }

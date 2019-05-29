@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 
 public class WaitForAttenActivity extends AppCompatActivity {
 
@@ -24,5 +25,14 @@ public class WaitForAttenActivity extends AppCompatActivity {
             startActivity(intent);
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public void fun(View v) {
+        switch (v.getId()) {
+            case R.id.back:
+                Intent intent = new Intent();
+                intent.setClass(WaitForAttenActivity.this, MainActivity.class);
+                startActivity(intent);
+        }
     }
 }

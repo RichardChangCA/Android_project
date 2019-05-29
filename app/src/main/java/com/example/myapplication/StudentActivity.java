@@ -319,7 +319,8 @@ public class StudentActivity extends AppCompatActivity implements View.OnClickLi
                         Log.d("笑嘻嘻", cameraSavePath_3 + ":cameraSavePath_3");
                         return_value = post_access.uploadFile(cameraSavePath_1,cameraSavePath_2,cameraSavePath_3, id, stu_result);
                         Log.d("笑嘻嘻", return_value + "哈哈");
-                        if(!TextUtils.isEmpty(stu_result)){
+//                        if(!TextUtils.isEmpty(stu_result)){
+                        if(!TextUtils.isEmpty(stu_result) && return_value.contentEquals("1")){
                             Log.d("学生签到","提交成功，等待考核");
                             Intent intent = new Intent();
                             //setClass函数的第一个参数是一个Context对象
@@ -391,7 +392,7 @@ public class StudentActivity extends AppCompatActivity implements View.OnClickLi
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         Log.d("相机","1");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { //安卓7.0
             uri = FileProvider.getUriForFile(StudentActivity.this, "com.example.myapplication.fileprovider", cameraSavePath);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         } else {

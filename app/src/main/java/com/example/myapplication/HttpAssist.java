@@ -25,7 +25,7 @@ public class HttpAssist {
         String BOUNDARY = UUID.randomUUID().toString(); // 边界标识 随机生成
         String PREFIX = "--", LINE_END = "\r\n";
         String CONTENT_TYPE = "multipart/form-data"; // 内容类型
-        String RequestURL = "http://39.97.105.151:8000/stu_upload/";
+        String RequestURL = "http://39.100.45.7:8000/stu_upload/";
         try {
             URL url = new URL(RequestURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -121,9 +121,6 @@ public class HttpAssist {
                 }
                 is.close();
                 dos.write(LINE_END.getBytes());
-
-
-
 
                 byte[] end_data = (PREFIX + BOUNDARY + PREFIX + LINE_END)
                         .getBytes();

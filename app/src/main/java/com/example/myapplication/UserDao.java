@@ -27,29 +27,29 @@ public class UserDao {
     String secret_key = "QWqw12!@QWqw12!@";
 //    private static final String CBC_PKCS5_PADDING = "AES/CBC/PKCS5Padding";//AES是加密方式 CBC是工作模式 PKCS5Padding是填充模式
 
-    public boolean register(String name, String password) {
-        if (conn == null) {
-            Log.i(TAG, "register:conn is null");
-            return false;
-        } else {
-            //进行数据库操作
-            String sql = "insert into app_admininfo(email,password) values(?,?)";
-            try {
-                PreparedStatement pre = conn.prepareStatement(sql);
-                pre.setString(1, name);
-                pre.setString(2, password);
-                return pre.execute();
-            } catch (SQLException e) {
-                return false;
-            } finally {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
+//    public boolean register(String name, String password) {
+//        if (conn == null) {
+//            Log.i(TAG, "register:conn is null");
+//            return false;
+//        } else {
+//            //进行数据库操作
+//            String sql = "insert into app_admininfo(email,password) values(?,?)";
+//            try {
+//                PreparedStatement pre = conn.prepareStatement(sql);
+//                pre.setString(1, name);
+//                pre.setString(2, password);
+//                return pre.execute();
+//            } catch (SQLException e) {
+//                return false;
+//            } finally {
+//                try {
+//                    conn.close();
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//    }
 
     public String register_attendance(String chosen_mac, String chosen_course, String start_time, String email) {
         if (conn == null) {
@@ -142,9 +142,10 @@ public class UserDao {
             //默认为学生
             if (account.contentEquals("rd2")) { //教师
                 sql = "select * from app_teacherinfo where email=? and password=?";
-            } else if (account.contentEquals("rd3")) { //管理员
-                sql = "select * from app_admininfo where email=? and password=?";
             }
+//            else if (account.contentEquals("rd3")) { //管理员
+//                sql = "select * from app_admininfo where email=? and password=?";
+//            }
             try {
                 String password_copy = password;
 
@@ -342,15 +343,17 @@ public class UserDao {
         } else {
             try {
                 //select attendance_id from app_attendanceinfo where course_id_id=? and teacher_id_id=? and attendance_tag='1'
-                String sql = "insert into app_attendance(tag,attendance_time,stu_id,att_id, dbm) values(?,?,(select studentNum from app_userinfo where email=?),(select attendance_id from app_attendanceinfo where course_id_id=? and teacher_id_id=? and attendance_tag=?),?)";
+                String sql = "insert into app_attendance(tag,attendance_time,stu_id,att_id, dbm, finish_tag,complain_tag) values(?,?,(select studentNum from app_userinfo where email=?),(select attendance_id from app_attendanceinfo where course_id_id=? and teacher_id_id=? and attendance_tag=?),?,?,?)";
                 PreparedStatement pres = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                pres.setString(1, "2");
+                pres.setString(1, "0");
                 pres.setString(2, attendance_time);
                 pres.setString(3, email);
                 pres.setString(4, courseId);
                 pres.setString(5, teacherId);
                 pres.setString(6, "1");
                 pres.setString(7, dbm);
+                pres.setString(8, "0");
+                pres.setString(9, "2");
                 pres.executeUpdate();
                 ResultSet res = pres.getGeneratedKeys();
                 res.last();

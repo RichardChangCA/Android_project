@@ -13,12 +13,23 @@
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="已提交考勤，不能重复提交"
+            android:text="---考勤失败---\n错误或重复上传考勤信息"
             android:layout_centerInParent="true"
+            android:textAlignment="center"
             android:textSize="20dp"
             android:textColor="#f00"
             android:padding="2dp"
             android:background="@color/white"></TextView>
+
+        <Button
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="fun"
+            android:text="返回"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_alignParentBottom="true"
+            />
 
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
